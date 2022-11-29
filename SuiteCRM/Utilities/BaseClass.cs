@@ -21,17 +21,17 @@ namespace SuiteCRM.Utilities
 {
     public class BaseClass
     {
-        ExtentReports extent;
-        [OneTimeSetUp]
-        public void SetupReport() {
+        //  ExtentReports extent;
+        //[OneTimeSetUp]
+        /* public void SetupReport() {
 
-            String workingDirectory = Environment.CurrentDirectory;
-            String projectDirectory = Directory.GetParent(workingDirectory).FullName;
-            String reportPath = projectDirectory + "index.html";
-            var htmlReporter = new ExtentHtmlReporter(reportPath);
-            extent.AttachReporter(htmlReporter);
-        
-        }
+             String workingDirectory = Environment.CurrentDirectory;
+             String projectDirectory = Directory.GetParent(workingDirectory).FullName;
+             String reportPath = projectDirectory + "index.html";
+             var htmlReporter = new ExtentHtmlReporter(reportPath);
+             extent.AttachReporter(htmlReporter);
+
+         }*/
 
 
         public IWebDriver driver;
@@ -39,7 +39,7 @@ namespace SuiteCRM.Utilities
 
         public void startBrowser()
         {
-            extent.CreateTest(TestContext.CurrentContext.Test.Name);
+            //extent.CreateTest(TestContext.CurrentContext.Test.Name);
 
             //String browserName = ConfigurationManager.AppSettings["browser"];
             InitBrowser("Chrome");
@@ -80,6 +80,7 @@ namespace SuiteCRM.Utilities
             //}
             driver.Quit();
         }
+
     }
 
 }

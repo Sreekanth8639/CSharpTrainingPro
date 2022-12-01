@@ -149,7 +149,9 @@ namespace SuiteCRM.Tests
 
             AccountsPageObjects.name.SendKeys(Accountname);
             AccountsPageObjects.Save.Click();
+            Thread.Sleep(500);
             AccountsPageObjects.Edit.Click();
+            Thread.Sleep(50);
             AccountsPageObjects.name.SendKeys(Accountname1);
             AccountsPageObjects.Save.Click();
 

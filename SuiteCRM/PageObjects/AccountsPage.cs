@@ -31,7 +31,7 @@ namespace SuiteCRM.PageObjects
         [FindsBy(How = How.XPath, Using = "//a[@href='#/accounts/index?return_module=Accounts&return_action=DetailView']")]
         public IWebElement View;
 
-        [FindsBy(How = How.XPath, Using ="//scrm-module-title[@class='list-view-title']")]
+        [FindsBy(How = How.XPath, Using ="//span[text()='Create']")]
         public IWebElement Createtitle;     
 
         [FindsBy(How = How.XPath, Using = "(//input)[2]")]

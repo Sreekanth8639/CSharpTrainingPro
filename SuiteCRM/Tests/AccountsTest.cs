@@ -152,7 +152,7 @@ namespace SuiteCRM.Tests
             Thread.Sleep(500);
             AccountsPageObjects.Edit.Click();
             Thread.Sleep(50);
-            AccountsPageObjects.name.SendKeys(Accountname1);
+            AccountsPageObjects.name.SendKeys("Y");
             AccountsPageObjects.Save.Click();
 
             AccountsPage verify = new AccountsPage(driver);
@@ -226,7 +226,7 @@ namespace SuiteCRM.Tests
 
             AccountsPage verify = new AccountsPage(driver);
 
-            Boolean display = verify.name.Displayed;
+            Boolean display = verify.Createtitle.Displayed;
             Assert.AreEqual(display, true);
             
 

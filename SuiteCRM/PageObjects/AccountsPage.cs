@@ -84,5 +84,8 @@ namespace SuiteCRM.PageObjects
 
         [FindsBy(How = How.XPath, Using = "//div[@role='alert']")]
         public IWebElement Deletesucesfull;
+        
+        [FindsBy(How = How.XPath, Using = "//scrm-module-title[@class='list-view-title']")]
+        public IWebElement  ViewAccountstitle;
     }
 }

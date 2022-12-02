@@ -189,7 +189,7 @@ namespace SuiteCRM.Tests
 
             WebDriverWait wait1 = new WebDriverWait(driver, TimeSpan.FromSeconds(500));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//button[text()[normalize-space()='Edit']]")));
-
+            Thread.Sleep(500);
             contacts.edit.Click();
 
             IWebElement element2 = driver.FindElement(By.XPath("(//input)[3]"));

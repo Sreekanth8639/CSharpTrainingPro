@@ -33,7 +33,7 @@ namespace SuiteCRM.Tests
 
             AccountsPage verify = new AccountsPage(driver);
 
-            Boolean display = verify.ViewAccountstitle.Displayed;
+            Boolean display = verify.Createtitle.Displayed;
             Assert.AreEqual(display, true);
 
         }
@@ -58,7 +58,7 @@ namespace SuiteCRM.Tests
 
             AccountsPage verify = new AccountsPage(driver);
 
-            Boolean display = verify.Createtitle.Displayed;
+            Boolean display = verify.ViewAccountstitle.Displayed;
             Assert.AreEqual(display, true);
 
 

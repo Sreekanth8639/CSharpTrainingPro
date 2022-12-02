@@ -87,5 +87,42 @@ namespace SuiteCRM.PageObjects
         
         [FindsBy(How = How.XPath, Using = "//scrm-module-title[@class='list-view-title']")]
         public IWebElement  ViewAccountstitle;
+
+        [FindsBy(How = How.XPath, Using = "//span[text()[normalize-space()='My Calls']]")]
+        public IWebElement MyCalls;
+
+        [FindsBy(How = How.XPath, Using = "//span[text()[normalize-space()='My Activity Stream']]")]
+        public IWebElement MyActivityStream;
+
+        [FindsBy(How = How.XPath, Using = "//span[text()[normalize-space()='My Meetings']]")]
+        public IWebElement MyMeetings;
+
+        [FindsBy(How = How.XPath, Using = "//span[text()[normalize-space()='My Top Open Opportunities']]")]
+        public IWebElement MyTopOpenOpportunities;
+
+        [FindsBy(How = How.XPath, Using = "//span[text()[normalize-space()='My Accounts']]")]
+        public IWebElement MyAccounts;
+
+            [FindsBy(How = How.XPath, Using = "//span[text()[normalize-space()='My Leads']]")]
+        public IWebElement MyLeads;
+
+            [FindsBy(How = How.XPath, Using = "//div[text()='Login credentials incorrect, please try again.']")]
+        public IWebElement InvalidLoginAlert;
+
+        [FindsBy(How = How.XPath, Using = "(//div[text()=' Missing required field '])[1]")]
+        public IWebElement VerifyEmptyLogin;
+
+            [FindsBy(How = How.XPath, Using = "//a[@href='#/accounts']")]
+        public IWebElement AccountsModule;
+
+            [FindsBy(How = How.XPath, Using = "//a[@href='#/accounts/edit?return_module=Accounts&return_action=DetailView']")]
+        public IWebElement CreateAccount;
+
+            [FindsBy(How = How.XPath, Using = "//a[@href='#/accounts/index?return_module=Accounts&return_action=DetailView']")]
+        public IWebElement ViewAccounts;
+
+            [FindsBy(How = How.XPath, Using = "//a[@href='#/import/step1?import_module=Accounts&return_module=Accounts&return_action=index']")]
+        public IWebElement ImportAccounts;
+
     }
 }

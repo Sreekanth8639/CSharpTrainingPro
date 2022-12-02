@@ -33,7 +33,7 @@ namespace SuiteCRM.Tests
 
             AccountsPage verify = new AccountsPage(driver);
 
-            Boolean display = verify.create.Displayed;
+            Boolean display = verify.ViewAccountstitle.Displayed;
             Assert.AreEqual(display, true);
 
         }
@@ -149,7 +149,7 @@ namespace SuiteCRM.Tests
 
             AccountsPageObjects.name.SendKeys(Accountname);
             AccountsPageObjects.Save.Click();
-            Thread.Sleep(500);
+            Thread.Sleep(5000);
             AccountsPageObjects.Edit.Click();
             Thread.Sleep(50);
             AccountsPageObjects.name.SendKeys("Y");
@@ -157,7 +157,7 @@ namespace SuiteCRM.Tests
 
             AccountsPage verify = new AccountsPage(driver);
 
-            Boolean display = verify.Title.Displayed;
+            Boolean display = verify.accountstitle.Displayed;
             Assert.AreEqual(display, true);
 
 

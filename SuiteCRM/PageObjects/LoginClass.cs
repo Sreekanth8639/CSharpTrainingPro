@@ -36,6 +36,7 @@ namespace SuiteCRM.PageObjects
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("login-button")));
             //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             login.Click();
+            //new ContactsPage();
         }
 
     }

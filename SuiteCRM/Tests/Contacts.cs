@@ -368,6 +368,37 @@ namespace SuiteCRM.Tests
             
         }
 
+        [Test]
+        public void verifyDeletingContact()
+        {
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//nav//li[2]")));
+            IWebElement element = driver.FindElement(By.XPath("//nav//li[2]"));
+            Actions action = new Actions(driver);
+            action.MoveToElement(element).Perform();
+            ContactsPageObjects contacts = new ContactsPageObjects(driver);
+            contacts.CreateContacts.Click();
+
+
+            IWebElement element1 = contacts.FirstName;
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("(//input)[3]")));
+            action.MoveToElement(element1).Click().Perform();
+            action.MoveToElement(element1).SendKeys("John").Perform();
+            contacts.LastName.SendKeys("Doe");
+            contacts.SaveButton.Click();
+            Thread.Sleep(3000);
+            contacts.ActionButton.Click();
+            contacts.DeleteButton.Click();
+            Thread.Sleep(1000);
+            contacts.ProceedButton.Click();
+            Assert.IsTrue(contacts.DeletingAlert.Displayed);
+
+
+        }
+
 
     }
 }

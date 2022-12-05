@@ -63,7 +63,6 @@ namespace SuiteCRM.PageObjects
         [FindsBy(How = How.XPath, Using = "(//button[text()=\" New \"])[2]")]
         public IWebElement newcontact;
 
-      //  (//button[@type=\"button\"])[3]  (new contact)
 
         [FindsBy(How = How.XPath, Using = "//span[text()=\"Create\"]")]
         public IWebElement createcontact;

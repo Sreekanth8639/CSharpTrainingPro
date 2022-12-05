@@ -16,7 +16,7 @@ namespace SuiteCRM.Tests
 
         [Test]
         //Tc_015
-        public void Verifycontactdropdown()
+        public void verifyContactDropdown()
         {
 
             LoginClass login = new LoginClass(driver);
@@ -56,7 +56,7 @@ namespace SuiteCRM.Tests
 
         [Test]
         //Tc_016
-        public void Verifycontactspage()
+        public void verifyContactsPage()
         {
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
@@ -79,7 +79,7 @@ namespace SuiteCRM.Tests
 
         [Test]
         //Tc_017
-        public void Verifycreatecontactspage()
+        public void verifyCreateContactsPage()
         {
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
@@ -102,7 +102,7 @@ namespace SuiteCRM.Tests
 
         [Test]
         //Tc_018
-        public void Verifyviewcontactspage()
+        public void verifyViewContactsPage()
 
         {
             LoginClass login = new LoginClass(driver);
@@ -127,7 +127,7 @@ namespace SuiteCRM.Tests
 
         [Test]
         //Tc_019
-        public void createcontacts()
+        public void createContacts()
         {
 
             LoginClass login = new LoginClass(driver);
@@ -159,7 +159,7 @@ namespace SuiteCRM.Tests
 
         [Test]
         //Tc_020
-        public void editcontacts()
+        public void editContacts()
         {
 
             LoginClass login = new LoginClass(driver);
@@ -209,7 +209,7 @@ namespace SuiteCRM.Tests
 
         [Test]
         //TC_021
-        public void popup()
+        public void verifyPopup()
         {
 
             LoginClass login = new LoginClass(driver);
@@ -259,7 +259,7 @@ namespace SuiteCRM.Tests
 
         [Test]
         //Tc_022
-        public void newcontacts()
+        public void newContacts()
         {
 
             LoginClass login = new LoginClass(driver);
@@ -301,7 +301,7 @@ namespace SuiteCRM.Tests
 
         [Test]
         //Tc_022
-        public void actiondropdown()
+        public void actionDropdown()
         {
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");

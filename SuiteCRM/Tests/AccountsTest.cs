@@ -222,6 +222,7 @@ namespace SuiteCRM.Tests
             AccountsPageObjects.name.SendKeys(Accountname);
 
             AccountsPageObjects.Save.Click();
+            Thread.Sleep(3000);
             AccountsPageObjects.New.Click();
 
             AccountsPage verify = new AccountsPage(driver);
@@ -256,6 +257,7 @@ namespace SuiteCRM.Tests
             AccountsPageObjects.name.SendKeys(Accountname);
 
             AccountsPageObjects.Save.Click();
+            Thread.Sleep(3000);
             AccountsPageObjects.actiondrop.Click(); 
             
 
@@ -309,6 +311,7 @@ namespace SuiteCRM.Tests
             AccountsPageObjects.name.SendKeys(Accountname);
 
             AccountsPageObjects.Save.Click();
+            Thread.Sleep(3000);
             AccountsPageObjects.actiondrop.Click();
             AccountsPageObjects.Delete.Click();
             WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(200));
@@ -322,8 +325,98 @@ namespace SuiteCRM.Tests
 
         }
 
+        [Test]
+        //TC-001
+        public void verifyLabels()
+        {
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("login-button")));
+            Thread.Sleep(3000);
+            AccountsPage AccountsPageObjects = new AccountsPage(driver);
+            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?module=Home']")));
 
+            Thread.Sleep(2000);
+            String MyCalls = AccountsPageObjects.MyCalls.Text;
+            Console.WriteLine(MyCalls);
+            Assert.That(MyCalls, Is.EqualTo("My Calls"), "Both are Equal");
+
+            Thread.Sleep(2000);
+            String MyActivityStream = AccountsPageObjects.MyActivityStream.Text;
+            Console.WriteLine(MyActivityStream);
+            Assert.That(MyActivityStream, Is.EqualTo("My Activity Stream"), "Both are Equal");
+
+            Thread.Sleep(2000);
+            String MyMeetings = AccountsPageObjects.MyMeetings.Text;
+            Console.WriteLine(MyMeetings);
+            Assert.That(MyMeetings, Is.EqualTo("My Meetings"), "Both are Equal");
+
+            Thread.Sleep(2000);
+            String MyTopOpenOpportunities = AccountsPageObjects.MyTopOpenOpportunities.Text;
+            Console.WriteLine(MyTopOpenOpportunities);
+            Assert.That(MyTopOpenOpportunities, Is.EqualTo("My Top Open Opportunities"), "Both are Equal");
+
+            Thread.Sleep(2000);
+            String MyAccounts = AccountsPageObjects.MyAccounts.Text;
+            Console.WriteLine(MyAccounts);
+            Assert.That(MyAccounts, Is.EqualTo("My Accounts"), "Both are Equal");
+
+            Thread.Sleep(2000);
+            String MyLeads = AccountsPageObjects.MyLeads.Text;
+            Console.WriteLine(MyLeads);
+            Assert.That(MyLeads, Is.EqualTo("My Leads"), "Both are Equal");
 
 
         }
+        [Test]
+        //TC-003
+        public void verifyInvalidLogin()
+        {
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("abc", "cba");
+            AccountsPage AccountsPageObjects = new AccountsPage(driver);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("login-button")));
+            Thread.Sleep(3000);
+            String invalidLoginAlert = AccountsPageObjects.InvalidLoginAlert.Text;
+            Assert.IsTrue(AccountsPageObjects.InvalidLoginAlert.Displayed);
+        }
+
+        [Test]
+        //TC-004
+        public void verifyEmptyLogin()
+        {
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("", "");
+            AccountsPage AccountsPageObjects = new AccountsPage(driver);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("login-button")));
+            Thread.Sleep(3000);
+            Assert.IsTrue(AccountsPageObjects.VerifyEmptyLogin.Displayed);
+
+        }
+
+        [Test]
+        //TC-005
+        public void verifyAccountsDropdown()
+        {
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            AccountsPage AccountsPageObjects = new AccountsPage(driver);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//a[@href='#/accounts']")));
+            IWebElement element = AccountsPageObjects.AccountsModule;
+            Actions action = new Actions(driver);
+            action.MoveToElement(element).Perform();
+            Assert.IsTrue(AccountsPageObjects.CreateAccount.Displayed);
+            Assert.IsTrue(AccountsPageObjects.ViewAccounts.Displayed);
+            Assert.IsTrue(AccountsPageObjects.ImportAccounts.Displayed);
+        }
+
+
+    }
+
+
 }
+

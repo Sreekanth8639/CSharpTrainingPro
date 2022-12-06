@@ -9,39 +9,42 @@ using System.Runtime.ConstrainedExecution;
 
 namespace SuiteCRM.Tests
 {
-    public class Tests : BaseClass
+    public class OpTests : BaseClass
     {
 
         
         //TC-43
         [Test]
-        [TestCase("will", "will", "Demo1")]
-        public void createOpportunity(string username, string password, string oppName)
+        [TestCase("Demo1")]
+        public void createOpportunity( string oppName)
         {
-            LoginClass loginClassPageOjbects = new LoginClass(driver);
-            DashboardPage dashboardPage = loginClassPageOjbects.validLogin(username, password);
+           
 
-                Thread.Sleep(TimeSpan.FromSeconds(5));
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            DashboardPage dashboardPage1 = new DashboardPage(driver);
+
+            Thread.Sleep(TimeSpan.FromSeconds(5));
                 Actions action = new Actions(driver);
-                action.MoveToElement(dashboardPage.opprtunitiesDropdown).Build().Perform();
-                dashboardPage.createOpprtunityOption.Click();
-                dashboardPage.opportunityName.Click();
+                action.MoveToElement(dashboardPage1.opprtunitiesDropdown).Build().Perform();
+                dashboardPage1.createOpprtunityOption.Click();
+                dashboardPage1.opportunityName.Click();
                 Thread.Sleep(TimeSpan.FromSeconds(5));
-                dashboardPage.opportunityName.SendKeys(oppName);
+                dashboardPage1.opportunityName.SendKeys(oppName);
                 Thread.Sleep(TimeSpan.FromSeconds(5));
-                dashboardPage.opportunityAmount.SendKeys("$50");
+                dashboardPage1.opportunityAmount.SendKeys("$50");
                 Thread.Sleep(TimeSpan.FromSeconds(5));
-                dashboardPage.opportunitySalesStage.SendKeys("Qualification");
-                dashboardPage.opportunitySalesStageDropdown.Click();
+                dashboardPage1.opportunitySalesStage.SendKeys("Qualification");
+                dashboardPage1.opportunitySalesStageDropdown.Click();
                 Thread.Sleep(TimeSpan.FromSeconds(5));
-                dashboardPage.opportunityAccount.SendKeys("AB Drivers Limited");
-                dashboardPage.opportunityAccountDropdown.Click();
+                dashboardPage1.opportunityAccount.SendKeys("AB Drivers Limited");
+                dashboardPage1.opportunityAccountDropdown.Click();
                 Thread.Sleep(TimeSpan.FromSeconds(5));
-                dashboardPage.opportunityCloseDate.SendKeys("2022-12-30");
+                dashboardPage1.opportunityCloseDate.SendKeys("2022-12-30");
                 Thread.Sleep(TimeSpan.FromSeconds(3));
-                dashboardPage.createOpportunitySaveButton.Click();
+                dashboardPage1.createOpportunitySaveButton.Click();
                 Thread.Sleep(TimeSpan.FromSeconds(3));
-                String opporPageName = dashboardPage.createdOpportunityPageName.Text;
+                String opporPageName = dashboardPage1.createdOpportunityPageName.Text;
                 Console.WriteLine(opporPageName);
                 Assert.AreEqual("Opportunity is not created as expected", oppName, opporPageName);           
 
@@ -49,25 +52,25 @@ namespace SuiteCRM.Tests
 
         //TC-49
         [Test]
-        [TestCase("will", "will")]
-        public void bulkActionDropdownOptions(string username, string password)
+       
+        public void bulkActionDropdownOptions()
         {
-            LoginClass loginClassPageOjbects = new LoginClass(driver);
-            DashboardPage dashboardPage = loginClassPageOjbects.validLogin(username, password);
-
-            //dashboardPage.bulkActionDropdownOptions();
             
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            DashboardPage dashboardPage1 = new DashboardPage(driver);
+
             Thread.Sleep(TimeSpan.FromSeconds(5));
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             Actions action = new Actions(driver);
-            action.MoveToElement(dashboardPage.opprtunitiesDropdown).Build().Perform();
-            dashboardPage.viewOpportunityOption.Click();
+            action.MoveToElement(dashboardPage1.opprtunitiesDropdown).Build().Perform();
+            dashboardPage1.viewOpportunityOption.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            dashboardPage.viewOpportunityCheckbox.Click();
+            dashboardPage1.viewOpportunityCheckbox.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            dashboardPage.bulkActionButton.Click();
+            dashboardPage1.bulkActionButton.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            IList<IWebElement> bulkDropdown = dashboardPage.bulkActionDropdownElements;
+            IList<IWebElement> bulkDropdown = dashboardPage1.bulkActionDropdownElements;
                 string[] elements = { "Delete", "Export", "Merge", "Mass Update" };
 
                 for (int j = 0; j < elements.Length; j++)
@@ -81,77 +84,84 @@ namespace SuiteCRM.Tests
         
         //TC_42
         [Test]
-        [TestCase("will", "will")]
-        public void opportunitiesDropdownOptions(string username, string password)
+        
+        public void opportunitiesDropdownOptions()
         {
-            LoginClass loginClassPageOjbects = new LoginClass(driver);
-            DashboardPage dashboardPage = loginClassPageOjbects.validLogin(username, password);
+           
 
-            //dashboardPage.opportunitiesDropdownOptions();
-            
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            DashboardPage dashboardPage1 = new DashboardPage(driver);
+           
+
             Thread.Sleep(TimeSpan.FromSeconds(5));
             Actions action = new Actions(driver);
-            action.MoveToElement(dashboardPage.opprtunitiesDropdown).Build().Perform();
+            action.MoveToElement(dashboardPage1.opprtunitiesDropdown).Build().Perform();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            Assert.IsTrue(dashboardPage.createOpprtunityOption.Displayed);
-            Assert.IsTrue(dashboardPage.viewOpportunityOption.Displayed);
-            Assert.IsTrue(dashboardPage.importOpportuntiesOption.Displayed);
+            Assert.IsTrue(dashboardPage1.createOpprtunityOption.Displayed);
+            Assert.IsTrue(dashboardPage1.viewOpportunityOption.Displayed);
+            Assert.IsTrue(dashboardPage1.importOpportuntiesOption.Displayed);
         }
 
         //TC-46
-        [Test]
-        [TestCase("will", "will")]
-        public void deleteOpportunities(string username, string password)
-        {
-            LoginClass loginClassPageOjbects = new LoginClass(driver);
-            DashboardPage dashboardPage = loginClassPageOjbects.validLogin(username, password);
 
-            //dashboardPage.deleteOpportunities();
-            
+        [Test]
+        
+        public void deleteOpportunities()
+        {
+           
+
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            DashboardPage dashboardPage1 = new DashboardPage(driver);
+
             Thread.Sleep(TimeSpan.FromSeconds(5));
             Actions action = new Actions(driver);
-            action.MoveToElement(dashboardPage.opprtunitiesDropdown).Build().Perform();
-            dashboardPage.viewOpportunityOption.Click();
+            action.MoveToElement(dashboardPage1.opprtunitiesDropdown).Build().Perform();
+            dashboardPage1.viewOpportunityOption.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            dashboardPage.recordInViewOpportunties.Click();
+            dashboardPage1.recordInViewOpportunties.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            dashboardPage.actionsDropdownInExistingOpportunty.Click();
+            dashboardPage1.actionsDropdownInExistingOpportunty.Click();
             Thread.Sleep(TimeSpan.FromSeconds(3));
-            dashboardPage.deleteInActionsDropdownInExistingOpportunty.Click();
+            dashboardPage1.deleteInActionsDropdownInExistingOpportunty.Click();
             Thread.Sleep(TimeSpan.FromSeconds(3));
-            dashboardPage.proceedToDeleteExistingOpportunty.Click();
+            dashboardPage1.proceedToDeleteExistingOpportunty.Click();
             Thread.Sleep(TimeSpan.FromSeconds(3));
-            string alert = dashboardPage.deletionAlertText.Text;
+            string alert = dashboardPage1.deletionAlertText.Text;
             Console.WriteLine(alert.Trim());
             Assert.AreEqual("Record deleted successfully\r\n×", alert.Trim());
         }
 
         //TC-44
         [Test]
-        [TestCase("will", "will", "2022-12-30")]
-        public void editOpportunities(string username, string password, string data)
+        [TestCase( "2022-12-30")]
+        public void editOpportunities( string data)
         {
-            LoginClass loginClassPageOjbects = new LoginClass(driver);
-            DashboardPage dashboardPage = loginClassPageOjbects.validLogin(username, password);
+            
+
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            DashboardPage dashboardPage1 = new DashboardPage(driver);
 
             Thread.Sleep(TimeSpan.FromSeconds(5));
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             Actions action = new Actions(driver);
-            action.MoveToElement(dashboardPage.opprtunitiesDropdown).Build().Perform();
-            dashboardPage.viewOpportunityOption.Click();
+            action.MoveToElement(dashboardPage1.opprtunitiesDropdown).Build().Perform();
+            dashboardPage1.viewOpportunityOption.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            dashboardPage.recordInViewOpportunties.Click();
+            dashboardPage1.recordInViewOpportunties.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            string previousData = dashboardPage.getTextXpathOfOpportuntiesCloseDate.Text;
+            string previousData = dashboardPage1.getTextXpathOfOpportuntiesCloseDate.Text;
             
             Console.WriteLine(previousData);
-            dashboardPage.editButtonInExistingOpportunty.Click();
+            dashboardPage1.editButtonInExistingOpportunty.Click();
             Thread.Sleep(TimeSpan.FromSeconds(3));
-            dashboardPage.opportunityCloseDate.Clear();
-            dashboardPage.opportunityCloseDate.SendKeys(data);
-            dashboardPage.saveButtonInExistingOpportunty.Click();
+            dashboardPage1.opportunityCloseDate.Clear();
+            dashboardPage1.opportunityCloseDate.SendKeys(data);
+            dashboardPage1.saveButtonInExistingOpportunty.Click();
             Thread.Sleep(TimeSpan.FromSeconds(2));
-            string currentData = dashboardPage.getTextXpathOfOpportuntiesCloseDate.Text;
+            string currentData = dashboardPage1.getTextXpathOfOpportuntiesCloseDate.Text;
             Console.WriteLine(currentData);
             Assert.AreNotEqual("User is not able to edit the details as expected", previousData, currentData);  
 
@@ -161,25 +171,28 @@ namespace SuiteCRM.Tests
 
         //TC-48
         [Test]
-        [TestCase("will", "will", "AB Drivers Limited")]
-        public void filterOpportunities(string username, string password, string data)
+        [TestCase("AB Drivers Limited")]
+        public void filterOpportunities( string data)
         {
-            LoginClass loginClassPageOjbects = new LoginClass(driver);
-            DashboardPage dashboardPage = loginClassPageOjbects.validLogin(username, password);
+          
+
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            DashboardPage dashboardPage1 = new DashboardPage(driver);
 
             Thread.Sleep(TimeSpan.FromSeconds(5));
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             Actions action = new Actions(driver);
-            action.MoveToElement(dashboardPage.opprtunitiesDropdown).Build().Perform();
-            dashboardPage.viewOpportunityOption.Click();
+            action.MoveToElement(dashboardPage1.opprtunitiesDropdown).Build().Perform();
+            dashboardPage1.viewOpportunityOption.Click();
             Thread.Sleep(TimeSpan.FromSeconds(3));
-            dashboardPage.filterButtonInViewOpportunties.Click();
+            dashboardPage1.filterButtonInViewOpportunties.Click();
 
-            dashboardPage.opportunityAccount.SendKeys("AB Drivers Limited");
-            dashboardPage.opportunityAccountDropdown.Click();
+            dashboardPage1.opportunityAccount.SendKeys("AB Drivers Limited");
+            dashboardPage1.opportunityAccountDropdown.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            dashboardPage.searchButtonToFilterOpportunties.Click();
-            dashboardPage.searchButtonToFilterOpportunties.Click();
+            dashboardPage1.searchButtonToFilterOpportunties.Click();
+            dashboardPage1.searchButtonToFilterOpportunties.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
             IList<IWebElement> filteredRecords = driver.FindElements(By.XPath("//a[starts-with(@href, \"#/opportunities/record\")]"));
             for (int i = 0; i < filteredRecords.Count; i++)
@@ -191,7 +204,7 @@ namespace SuiteCRM.Tests
                 Assert.AreEqual(filterRecord[0].Trim(), data);
             }
 
-            //recently view record(//scrm-label[@labelkey="LBL_LAST_VIEWED"]//following::a)[1]
+           
         }
 
     }

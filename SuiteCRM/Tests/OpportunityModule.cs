@@ -103,10 +103,9 @@ namespace SuiteCRM.Tests
             Assert.IsTrue(dashboardPage1.importOpportuntiesOption.Displayed);
         }
 
-        //TC-46
-
-        [Test]
         
+        //TC-46
+        [Test]
         public void deleteOpportunities()
         {
            
@@ -138,8 +137,6 @@ namespace SuiteCRM.Tests
         [TestCase( "2022-12-30")]
         public void editOpportunities( string data)
         {
-            
-
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
             DashboardPage dashboardPage1 = new DashboardPage(driver);
@@ -174,8 +171,6 @@ namespace SuiteCRM.Tests
         [TestCase("AB Drivers Limited")]
         public void filterOpportunities( string data)
         {
-          
-
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
             DashboardPage dashboardPage1 = new DashboardPage(driver);
@@ -197,15 +192,56 @@ namespace SuiteCRM.Tests
             IList<IWebElement> filteredRecords = driver.FindElements(By.XPath("//a[starts-with(@href, \"#/opportunities/record\")]"));
             for (int i = 0; i < filteredRecords.Count; i++)
             {
-                Console.WriteLine(filteredRecords.Count);
-                Console.WriteLine(filteredRecords[i].Text);
-                string[] filterRecord = filteredRecords[i].Text.Split("-");
-                Console.WriteLine(filterRecord[0].Trim());
+                string[] filterRecord = filteredRecords[i].Text.Split("-");                
                 Assert.AreEqual(filterRecord[0].Trim(), data);
-            }
-
-           
+            }           
         }
 
+        //TC-45
+        [Test]
+        [TestCase("AB Drivers Limited")]
+        public void duplicateOpportunities(string data)
+        {
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            DashboardPage dashboardPage1 = new DashboardPage(driver);
+
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            Actions action = new Actions(driver);
+            action.MoveToElement(dashboardPage1.opprtunitiesDropdown).Build().Perform();
+            dashboardPage1.viewOpportunityOption.Click();
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+            String firstRecordName = dashboardPage1.recordInViewOpportunties.Text;
+            dashboardPage1.recordInViewOpportunties.Click();
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            dashboardPage1.actionsDropdownInExistingOpportunty.Click();
+            dashboardPage1.duplicateInActionsDropdownInExistingOpportunty.Click();
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+            dashboardPage1.deleteIconOfAccountNameInOpportunties.Click();
+            dashboardPage1.opportunityAccount.SendKeys(data);
+            dashboardPage1.opportunityAccountDropdown.Click();
+            Thread.Sleep(TimeSpan.FromSeconds(2));
+            dashboardPage1.saveButtonInExistingOpportunty.Click();
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            Actions action1 = new Actions(driver);
+            action.MoveToElement(dashboardPage1.opprtunitiesDropdown).Build().Perform();
+            dashboardPage1.viewOpportunityOption.Click();
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+            dashboardPage1.filterButtonInViewOpportunties.Click();
+            dashboardPage1.opportunityNameTextboxInFilterPage.SendKeys(firstRecordName);
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            dashboardPage1.searchButtonToFilterOpportunties.Click();
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            IList<IWebElement> filteredRecords = driver.FindElements(By.XPath("//table[@aria-describedby=\"table-body\"]//tr/td[2]/scrm-field/scrm-dynamic-field/a/scrm-varchar-detail"));
+
+            for (int i = 0; i < filteredRecords.Count; i++)
+            {
+                if (filteredRecords.Count > 1) Assert.That(filteredRecords.Count > 1, "Duplicated records are not displayed as expected");
+                else Assert.That(filteredRecords.Count == 1, "Records are not duplicated");
+            }
+        }
+
+        }
     }
-}

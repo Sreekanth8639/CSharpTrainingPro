@@ -70,7 +70,7 @@ namespace SuiteCRM.PageObjects
         [FindsBy(How = How.XPath, Using = "//a[normalize-space(text())='Import Opportunities']")]
         public IWebElement importOpportuntiesOption;
 
-        [FindsBy(How = How.XPath, Using = "(//a[starts-with(@href, \"#/opportunities/record\")])[5]")]
+        [FindsBy(How = How.XPath, Using = "//table[@aria-describedby=\"table-body\"]//tr[1]/td[2]/scrm-field/scrm-dynamic-field/a/scrm-varchar-detail")]
         public IWebElement recordInViewOpportunties;
 
         [FindsBy(How = How.XPath, Using = "//scrm-dropdown-button[@autoclose=\"outside\"]/div/button")]
@@ -99,11 +99,21 @@ namespace SuiteCRM.PageObjects
 
         [FindsBy(How = How.XPath, Using = "//div/scrm-field-layout/form/div[2]/div[2]/div[2]/div[1]/scrm-field/scrm-dynamic-field/scrm-date-detail")]
         public IWebElement getTextXpathOfOpportuntiesCloseDate;
-
-
-
-
-
         
+        [FindsBy(How = How.XPath, Using = "//div[text()=' Duplicate ']")]
+        public IWebElement duplicateInActionsDropdownInExistingOpportunty;
+
+        [FindsBy(How = How.XPath, Using = "(//input[@class=\"form-control form-control-sm ng-untouched ng-dirty ng-valid\"])[1]")]
+        public IWebElement opportunityNameTextboxInFilterPage;
+
+        [FindsBy(How = How.XPath, Using = "(//delete-icon[@aria-label=\"Remove tag\"])[1]")]
+        public IWebElement deleteIconOfAccountNameInOpportunties;
+
+
+
+
+
+
+
     }
 }

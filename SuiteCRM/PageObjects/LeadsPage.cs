@@ -84,5 +84,18 @@ namespace SuiteCRM.PageObjects
 
         [FindsBy(How = How.XPath, Using = "(//button[@type='button'])[8]")]
         public IWebElement OKButtonPopup;
+
+
+        [FindsBy(How = How.XPath, Using = "//input[@placeholder='Search...']")]
+        public IWebElement searchIcon;
+
+        [FindsBy(How = How.XPath, Using = "//a[text()='OVERVIEW']")]
+        public IWebElement overview;
+
+        [FindsBy(How = How.XPath, Using = "//a[text()='MORE INFORMATION']")]
+        public IWebElement moreInformation;
+
+        [FindsBy(How = How.XPath, Using = "//a[text()='OTHER']")]
+        public IWebElement other;
     }
 }

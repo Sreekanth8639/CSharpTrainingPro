@@ -226,5 +226,63 @@ namespace SuiteCRM.Tests {
             Assert.IsTrue(LeadPageObj.CreateLeadPage.Displayed);
 
         }
+
+        [Test]
+        public void verifySearchsection()
+        {
+            LeadsPage LeadPage = new LeadsPage(driver);
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//nav//li[4]")));
+            IWebElement element = driver.FindElement(By.XPath("//nav//li[4]"));
+            Actions action = new Actions(driver);
+            action.MoveToElement(element).Perform();
+            LeadsPage LeadPageObj = new LeadsPage(driver);
+            //create leads
+            LeadPageObj.CreateLead.Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            WebDriverWait wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//input[@placeholder='Search...']")));
+
+
+            Boolean display = LeadPageObj.searchIcon.Displayed;
+            Assert.AreEqual(display, true);
+
+
+        }
+        [Test]
+        public void verifyOverviewMoreInformationOther()
+        {
+            LeadsPage LeadPage = new LeadsPage(driver);
+            LoginClass login = new LoginClass(driver);
+            login.validLogin("will", "will");
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//nav//li[4]")));
+            IWebElement element = driver.FindElement(By.XPath("//nav//li[4]"));
+            Actions action = new Actions(driver);
+            action.MoveToElement(element).Perform();
+            LeadsPage LeadPageObj = new LeadsPage(driver);
+            //create leads
+            LeadPageObj.CreateLead.Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            WebDriverWait wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//input[@placeholder='Search...']")));
+
+            Boolean display2 = LeadPageObj.overview.Displayed;
+            Assert.AreEqual(display2, true);
+
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+            Boolean display3 = LeadPageObj.moreInformation.Displayed;
+            Assert.AreEqual(display3, true);
+
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+            Boolean display4 = LeadPageObj.other.Displayed;
+            Assert.AreEqual(display4, true);
+
+        }
+
     }
 }

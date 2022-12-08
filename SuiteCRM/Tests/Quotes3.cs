@@ -15,7 +15,6 @@ namespace SuiteCRM.Tests
 {
     public class Quotes3 : BaseClass
     {
-        //testcase3
         [Test]
         public void saveButton35()
         {
@@ -35,26 +34,24 @@ namespace SuiteCRM.Tests
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//a[@href='#/quotes/edit?return_module=AOS_Quotes&return_action=DetailView']")));
 
             quote.createQuote.Click();
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
-          
+            driver.SwitchTo().Frame(quote.quotesFrame);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             WebDriverWait wait7 = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//a[@role='button']//preceding::div[@id='detailpanel_-1']//input[@id='name']")));
-            driver.FindElement(By.XPath("//form//div[@id='EditView_tabs']//input[@id='name']")).SendKeys("Phillipse");
-
+            quote.quoteTitle.SendKeys("Phillipse");
             WebDriverWait wait9 = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
-            String title = driver.FindElement(By.XPath("//form//div[@id='EditView_tabs']//input[@id='name']")).GetAttribute("value");
+            String title = quote.quoteTitle.GetAttribute("value");
+
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//input[@id='SAVE']")));
-            driver.FindElement(By.XPath("//input[@id='expiration']")).SendKeys("2022-12-04");
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             quote.quoteSave.Click();
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe")));
+            driver.SwitchTo().Frame(quote.frameAfterquotes);
+            String titleQuote = quote.quoteTitleHeader.Text;
 
-            String titleQuote = driver.FindElement(By.XPath("//h2[@class='module-title-text']")).Text;
-            Assert.AreEqual(title,titleQuote);
+            Assert.AreEqual(title, titleQuote);
 
         }
-        //testcase4
+        
         [Test]
         public void errorMessage40()
         {
@@ -76,23 +73,23 @@ namespace SuiteCRM.Tests
             quote.createQuote.Click();
 
 
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
+            driver.SwitchTo().Frame(quote.quotesFrame);
 
 
             WebDriverWait wait6 = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//input[@id='SAVE']")));
 
 
-            Boolean visible = driver.FindElement(By.XPath("//input[@id='SAVE']")).Displayed;
+            Boolean visible = quote.quoteSave.Displayed;
             Console.WriteLine(visible);
 
             quote.quoteSave.Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            Boolean errorMessage=quote.quoteErrorMessage.Displayed;
+            Boolean errorMessage = quote.quoteErrorMessage.Displayed;
             Console.WriteLine(errorMessage);
             Assert.AreEqual(errorMessage, true);
         }
-        //testcase5
+        
         [Test]
         public void opportunityWindow41()
         {
@@ -112,7 +109,7 @@ namespace SuiteCRM.Tests
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//a[@href='#/quotes/edit?return_module=AOS_Quotes&return_action=DetailView']")));
 
             quote.createQuote.Click();
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
+            driver.SwitchTo().Frame(quote.quotesFrame);
 
 
             WebDriverWait wait6 = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
@@ -132,22 +129,27 @@ namespace SuiteCRM.Tests
             TestContext.Progress.WriteLine(quote.opportunityTable);
             Assert.True(quote.opportunityTable.Displayed);
 
-            driver.FindElement(By.XPath("//input[@id='name_advanced']")).SendKeys("AB Drivers Limited - 1000 units");
+            quote.accountNameSecondWindow.SendKeys("AB Drivers Limited - 1000 units");
+
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.FindElement(By.XPath("//input[@id='search_form_submit']")).Click();
+            quote.searchButtonSecondWindow.Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            IWebElement oppportuniyName= driver.FindElement(By.XPath("//a[normalize-space()='AB Drivers Limited - 1000 units']"));
+
+
+            IWebElement oppportuniyName = quote.opportunityNameSecondWindow;
             oppportuniyName.Click();
             String firstWindow2 = driver.WindowHandles[0];
             driver.SwitchTo().Window(firstWindow2);
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
 
-            String opportunityQuote =driver.FindElement(By.XPath("//input[@id='opportunity']")).GetAttribute("value");
+            driver.SwitchTo().Frame(quote.quotesFrame);
+
+            String opportunityQuote = quote.opportunityName.GetAttribute("value");
             Assert.True(opportunityQuote.Contains("AB Drivers Limited - 1000 units"));
-                
-          }
 
-        //testcase6
+        }
+
+       
         [Test]
         public void account36()
         {
@@ -168,12 +170,12 @@ namespace SuiteCRM.Tests
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//a[@href='#/quotes/edit?return_module=AOS_Quotes&return_action=DetailView']")));
 
             quote.createQuote.Click();
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
+            driver.SwitchTo().Frame(quote.quotesFrame);
 
 
             quote.quoteTitle.SendKeys("Phillipse");
-            IWebElement account2 = driver.FindElement(By.XPath("//input[@id='billing_account']"));
-            account2.SendKeys("hgsshgdgh");
+            IWebElement account2 = quote.quoteAccountNameTextBox;
+            account2.SendKeys("Robert");
             WebDriverWait wait8 = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//button[@id='btn_billing_account']//*[name()='svg']")));
 
@@ -193,9 +195,8 @@ namespace SuiteCRM.Tests
             {
                 a.Add(accountName);
             }
-            driver.FindElement(By.XPath("//input[@id='name_advanced']")).SendKeys("Sea Region Inc");
-            driver.FindElement(By.XPath("//input[@id='search_form_submit']")).Click();
-
+            quote.accountNameSecondWindow.SendKeys("Sea Region Inc");
+            quote.searchButtonSecondWindow.Click();
 
             if (a.Contains("Sea Region Inc"))
             {
@@ -208,12 +209,12 @@ namespace SuiteCRM.Tests
             String firstWindow = driver.WindowHandles[0];
             driver.SwitchTo().Window(firstWindow);
             TestContext.Progress.WriteLine(quote.quoteAccountNameTextBox);
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
+            driver.SwitchTo().Frame(quote.quotesFrame);
 
             String name = quote.quoteAccountNameTextBox.GetAttribute("value");
             Assert.True(name.Contains("Sea Region Inc"));
         }
-        //testcase7
+        
         [Test]
         public void searchAccount37()
         {
@@ -233,26 +234,24 @@ namespace SuiteCRM.Tests
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//a[@href='#/quotes/edit?return_module=AOS_Quotes&return_action=DetailView']")));
 
             quote.createQuote.Click();
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
+            driver.SwitchTo().Frame(quote.quotesFrame);
 
 
             quote.quoteTitle.SendKeys("Phillipse");
-
-            IWebElement account2 = driver.FindElement(By.XPath("//input[@id='billing_account']"));
-            account2.SendKeys("hgsshgdgh");
+            IWebElement account2 = quote.quoteAccountNameTextBox;
+            account2.SendKeys("Robert");
             WebDriverWait wait8 = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//button[@id='btn_billing_account']//*[name()='svg']")));
 
 
             IWebElement element2 = quote.quoteAccountCursor;
-       
             element2.Click();
 
             Assert.AreEqual(2, driver.WindowHandles.Count);
             String secondWindow = driver.WindowHandles[1];
             driver.SwitchTo().Window(secondWindow);
             TestContext.Progress.WriteLine(quote.quoteAccountName);
-            String variable = "Suite_crm7870";
+            String variable = "Sea Region Inc";
 
             ArrayList a = new ArrayList();
             IList<IWebElement> accountnames = driver.FindElements(By.XPath("//table[4]/tbody"));
@@ -260,28 +259,27 @@ namespace SuiteCRM.Tests
             {
                 a.Add(accountName);
             }
-            driver.FindElement(By.XPath("//input[@id='name_advanced']")).SendKeys("Sea Region Inc");
-            driver.FindElement(By.XPath("//input[@id='search_form_submit']")).Click();
+            quote.accountNameSecondWindow.SendKeys("Sea Region Inc");
+            quote.searchButtonSecondWindow.Click();
 
-     
-               if(a.Contains("Sea Region Inc"))
-                {
-                    Assert.Equals("Sea Region Inc", variable);
-                }
+            if (a.Contains("Sea Region Inc"))
+            {
+                Assert.Equals("Sea Region Inc", variable);
+            }
 
-            String accountname3 = "Sea Region Inc";
+
             quote.quoteAccountName.Click();
 
             String firstWindow = driver.WindowHandles[0];
             driver.SwitchTo().Window(firstWindow);
             TestContext.Progress.WriteLine(quote.quoteAccountNameTextBox);
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
+            driver.SwitchTo().Frame(quote.quotesFrame);
 
             String name = quote.quoteAccountNameTextBox.GetAttribute("value");
             Assert.True(name.Contains("Sea Region Inc"));
 
         }
-        //testcase8
+        
 
         [Test]
         public void billingShippingAddress39()
@@ -302,12 +300,12 @@ namespace SuiteCRM.Tests
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//a[@href='#/quotes/edit?return_module=AOS_Quotes&return_action=DetailView']")));
 
             quote.createQuote.Click();
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
+            driver.SwitchTo().Frame(quote.quotesFrame);
 
 
             quote.quoteTitle.SendKeys("hemsworth");
-            IWebElement account2 = driver.FindElement(By.XPath("//input[@id='billing_account']"));
-            account2.SendKeys("hgsshgdgh");
+            IWebElement account2 = quote.quoteAccountNameTextBox;
+            account2.SendKeys("Robert");
             WebDriverWait wait8 = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//button[@id='btn_billing_account']//*[name()='svg']")));
 
@@ -327,40 +325,40 @@ namespace SuiteCRM.Tests
             {
                 a.Add(accountName);
             }
-            driver.FindElement(By.XPath("//input[@id='name_advanced']")).SendKeys("Sea Region Inc");
-            driver.FindElement(By.XPath("//input[@id='search_form_submit']")).Click();
+            quote.accountNameSecondWindow.SendKeys("Sea Region Inc");
+            quote.searchButtonSecondWindow.Click();
 
-                if (a.Contains("Sea Region Inc")) 
-                {
-                    Assert.Equals("Sea Region Inc", variable);
-                }
-            
+            if (a.Contains("Sea Region Inc"))
+            {
+                Assert.Equals("Sea Region Inc", variable);
+            }
+
 
             quote.quoteAccountName.Click();
 
             String firstWindow = driver.WindowHandles[0];
             driver.SwitchTo().Window(firstWindow);
             TestContext.Progress.WriteLine(quote.quoteAccountNameTextBox);
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
+            driver.SwitchTo().Frame(quote.quotesFrame);
 
             String name = quote.quoteAccountNameTextBox.GetAttribute("value");
             Assert.True(name.Contains("Sea Region Inc"));
 
-            String billingaddrs =driver.FindElement(By.XPath("//textarea[@id='billing_address_street']")).GetAttribute("value");
-            String shippingaddrs = driver.FindElement(By.XPath("//textarea[@id='shipping_address_street']")).GetAttribute("value");
+            String billingaddrs = quote.billingAddress.GetAttribute("value");
+            String shippingaddrs = quote.shippingAddress.GetAttribute("value");
             Assert.AreEqual(billingaddrs, shippingaddrs);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            driver.FindElement(By.XPath("//input[@id='shipping_address_country']")).Clear();
-            driver.FindElement(By.XPath("//input[@id='shipping_address_country']")).SendKeys("USA");
+            quote.shippingAddress.Clear();
+            quote.shippingAddress.SendKeys("USA");
 
 
             WebDriverWait wait7 = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//input[@id='shipping_checkbox']")));
 
-            Assert.IsTrue(driver.FindElement(By.XPath("//input[@id='shipping_checkbox']")).Enabled);
+            Assert.IsTrue(quote.copyAddressCheckBox.Enabled);
 
         }
-        //testcase9
+        
         [Test]
         public void crossButtonBesideAccount38()
         {
@@ -380,12 +378,12 @@ namespace SuiteCRM.Tests
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//a[@href='#/quotes/edit?return_module=AOS_Quotes&return_action=DetailView']")));
 
             quote.createQuote.Click();
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
+            driver.SwitchTo().Frame(quote.quotesFrame);
 
 
             quote.quoteTitle.SendKeys("Phillipse");
-            IWebElement account2 = driver.FindElement(By.XPath("//input[@id='billing_account']"));
-            account2.SendKeys("hgsshgdgh");
+            IWebElement account2 = quote.quoteAccountNameTextBox;
+            account2.SendKeys("Robert");
             WebDriverWait wait8 = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//button[@id='btn_billing_account']//*[name()='svg']")));
 
@@ -405,28 +403,23 @@ namespace SuiteCRM.Tests
             {
                 a.Add(accountName);
             }
-            driver.FindElement(By.XPath("//input[@id='name_advanced']")).SendKeys("Sea Region Inc");
-            driver.FindElement(By.XPath("//input[@id='search_form_submit']")).Click();
+            quote.accountNameSecondWindow.SendKeys("Sea Region Inc");
+            quote.searchButtonSecondWindow.Click();
 
-            
-                if (a.Contains("Sea Region Inc")) 
-                {
-                    Assert.Equals("Sea Region Inc", variable);
-                }
-            
+            if (a.Contains("Sea Region Inc"))
+            {
+                Assert.Equals("Sea Region Inc", variable);
+            }
+
 
             quote.quoteAccountName.Click();
 
             String firstWindow = driver.WindowHandles[0];
             driver.SwitchTo().Window(firstWindow);
             TestContext.Progress.WriteLine(quote.quoteAccountNameTextBox);
-
-            driver.SwitchTo().Frame(driver.FindElement(By.XPath("//iframe[@src='./legacy/index.php?return_module=AOS_Quotes&return_action=DetailView&module=AOS_Quotes&action=EditView']")));
-
-            driver.FindElement(By.XPath("//input[@id='billing_account']")).GetAttribute("value");
-
+            driver.SwitchTo().Frame(quote.quotesFrame);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(40);
-            account2.SendKeys("clkghhg");
+            account2.SendKeys("cruise");
             WebDriverWait wait7 = new WebDriverWait(driver, TimeSpan.FromSeconds(40));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//button[@id='btn_clr_billing_contact']//*[name()='svg']//*[name()='g']//*[name()='polygon' and contains(@class,'st0')]")));
 
@@ -440,5 +433,6 @@ namespace SuiteCRM.Tests
             }
 
         }
+
     }
 }

@@ -14,182 +14,159 @@ namespace SuiteCRM.Tests
     public class Contacts :BaseClass
     {
 
-        [Test]
         //Tc_015
-        public void verifyContactDropdown()
+        [Test]
+        public void Verifycontactdropdown()
         {
 
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
+            ContactsPageObjects contacts = new ContactsPageObjects(driver);
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//nav//li[2]")));
             IWebElement element = driver.FindElement(By.XPath("//nav//li[2]"));
+            
             Actions action = new Actions(driver);
             action.MoveToElement(element).Perform();
 
-            ContactsPageObjects contacts = new ContactsPageObjects(driver);
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display = contacts.verifycreatecontacts.Displayed;
-            Assert.AreEqual(display, true);
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display1 = contacts.verifycreatecontactsfromvcard.Displayed;
-
-            Assert.AreEqual(display1, true);
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display2 = contacts.verifyviewcontact.Displayed;
-
-            Assert.AreEqual(display2, true);
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display3 = contacts.verifyimportcontact.Displayed;
-
-            Assert.AreEqual(display3, true);
+            Assert.IsTrue(contacts.verifycreatecontacts.Displayed);
+            Assert.IsTrue(contacts.verifycreatecontactsfromvcard.Displayed);
+            Assert.IsTrue(contacts.verifyviewcontact.Displayed);
+            Assert.IsTrue(contacts.verifyimportcontact.Displayed);
 
         }
 
-        [Test]
         //Tc_016
-        public void verifyContactsPage()
+        [Test]
+        public void Verifycontactspage()
         {
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
+            ContactsPageObjects contacts = new ContactsPageObjects(driver);
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//nav//li[2]")));
             IWebElement element = driver.FindElement(By.XPath("//nav//li[2]"));
             Actions action = new Actions(driver);
             action.MoveToElement(element).Perform();
 
-            ContactsPageObjects contacts = new ContactsPageObjects(driver);
             contacts.contacts.Click();
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display = contacts.verifycontactspage.Displayed;
-
-            Assert.AreEqual(display, true);
+            Assert.IsTrue(contacts.verifycontactspage.Displayed);
 
         }
 
-        [Test]
         //Tc_017
-        public void verifyCreateContactsPage()
+        [Test]
+        public void Verifycreatecontactspage()
         {
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
+            ContactsPageObjects contacts = new ContactsPageObjects(driver);
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//nav//li[2]")));
             IWebElement element = driver.FindElement(By.XPath("//nav//li[2]"));
             Actions action = new Actions(driver);
             action.MoveToElement(element).Perform();
-
-            ContactsPageObjects contacts = new ContactsPageObjects(driver);
 
             contacts.createcontacts.Click();
+            Assert.IsTrue(contacts.verifycreatecontactspage.Displayed);
 
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display = contacts.verifycreatecontactspage.Displayed;
-
-            Assert.AreEqual(display, true);
         }
 
-        [Test]
         //Tc_018
-        public void verifyViewContactsPage()
+        [Test]
+        public void Verifyviewcontactspage()
 
         {
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
+            ContactsPageObjects contacts = new ContactsPageObjects(driver);
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//nav//li[2]")));
             IWebElement element = driver.FindElement(By.XPath("//nav//li[2]"));
             Actions action = new Actions(driver);
             action.MoveToElement(element).Perform();
-
-            ContactsPageObjects contacts = new ContactsPageObjects(driver);
 
             contacts.verifyviewcontact.Click();
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display = contacts.verifyviewcontactspage.Displayed;
-
-            Assert.AreEqual(display, true);
+            Assert.IsTrue(contacts.verifyviewcontactspage.Displayed);
 
         }
 
-        [Test]
+
         //Tc_019
-        public void createContacts()
+        [Test]
+        [TestCase("John","Jons")]
+        public void createcontacts(string a, string b)
         {
 
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
+            ContactsPageObjects contacts = new ContactsPageObjects(driver);
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//nav//li[2]")));
             IWebElement element = driver.FindElement(By.XPath("//nav//li[2]"));
             Actions action = new Actions(driver);
             action.MoveToElement(element).Perform();
 
-            ContactsPageObjects contacts = new ContactsPageObjects(driver);
-
             contacts.createcontacts.Click();
 
-            IWebElement element1 = driver.FindElement(By.XPath("(//input)[3]"));
+            WebDriverWait wait1 = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("(//input)[3]")));
+            IWebElement element1 = driver.FindElement(By.XPath("(//input)[3]"));
             action.MoveToElement(element1).Click().Perform();
-
+            
             //first name
-
-            action.MoveToElement(element1).SendKeys("John").Perform();
+        
+            action.MoveToElement(element1).SendKeys(a).Perform();
 
             //Last name
-            driver.FindElement(By.XPath("(//input)[4]")).SendKeys("jons");
+            contacts.lastname.SendKeys(b);
+            
 
             contacts.save.Click();
 
         }
 
-        [Test]
         //Tc_020
-        public void editContacts()
+        [Test]
+        [TestCase("John", "Jons")]
+        
+        public void editcontacts(string a, string b)
         {
 
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
+            ContactsPageObjects contacts = new ContactsPageObjects(driver);
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//nav//li[2]")));
             IWebElement element = driver.FindElement(By.XPath("//nav//li[2]"));
             Actions action = new Actions(driver);
             action.MoveToElement(element).Perform();
 
-            ContactsPageObjects contacts = new ContactsPageObjects(driver);
-
             contacts.createcontacts.Click();
 
+            WebDriverWait wait1 = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             IWebElement element1 = driver.FindElement(By.XPath("(//input)[3]"));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("(//input)[3]")));
             action.MoveToElement(element1).Click().Perform();
 
             //first name
 
-            action.MoveToElement(element1).SendKeys("John").Perform();
+            action.MoveToElement(element1).SendKeys(a).Perform();
 
             //Last name
-            driver.FindElement(By.XPath("(//input)[4]")).SendKeys("jons");
+            contacts.lastname.SendKeys(b);
 
             contacts.save.Click();
 
-            WebDriverWait wait1 = new WebDriverWait(driver, TimeSpan.FromSeconds(500));
+            WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(500));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//button[text()[normalize-space()='Edit']]")));
-            Thread.Sleep(500);
+
             contacts.edit.Click();
 
             IWebElement element2 = driver.FindElement(By.XPath("(//input)[3]"));
@@ -206,10 +183,12 @@ namespace SuiteCRM.Tests
 
         }
 
+        //TC_021
 
         [Test]
-        //TC_021
-        public void verifyPopup()
+        [TestCase("John", "Jons")]
+        
+        public void popup(string a, string b)
         {
 
             LoginClass login = new LoginClass(driver);
@@ -232,34 +211,29 @@ namespace SuiteCRM.Tests
 
             //first name
 
-            action.MoveToElement(element1).SendKeys("John").Perform();
+            action.MoveToElement(element1).SendKeys(a).Perform();
 
             //Last name
-            driver.FindElement(By.XPath("(//input)[4]")).SendKeys("Doe");
+            contacts.lastname.SendKeys(b);
 
             Thread.Sleep(50);
 
             contacts.cancel.Click();
 
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display = contacts.popup.Displayed;
-
-            Assert.AreEqual(display, true);
-
+            Assert.IsTrue(contacts.popup.Displayed);
+            Thread.Sleep(50);
             contacts.ok.Click();
 
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display1 = contacts.verifycontactspage.Displayed;
-
-            Assert.AreEqual(display1, true);
+            Assert.IsTrue(contacts.verifycontactspage.Displayed);
 
         }
 
-        [Test]
         //Tc_022
-        public void newContacts()
+        [Test]
+        
+        [TestCase("John", "Jons")]
+
+        public void newcontacts(string a, string b)
         {
 
             LoginClass login = new LoginClass(driver);
@@ -280,10 +254,10 @@ namespace SuiteCRM.Tests
 
             //first name
 
-            action.MoveToElement(element1).SendKeys("John").Perform();
+            action.MoveToElement(element1).SendKeys(a).Perform();
 
             //Last name
-            driver.FindElement(By.XPath("(//input)[4]")).SendKeys("Doe");
+            contacts.lastname.SendKeys(b);
 
             contacts.save.Click();
 
@@ -291,17 +265,15 @@ namespace SuiteCRM.Tests
 
             contacts.newcontact.Click();
 
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display = contacts.createcontact.Displayed;
-
-            Assert.AreEqual(display, true);
+            Assert.IsTrue(contacts.createcontact.Displayed);
 
         }
 
-        [Test]
         //Tc_022
-        public void actionDropdown()
+        [Test]
+
+        [TestCase("John", "Jons")] 
+        public void actiondropdown(string a, string b)
         {
             LoginClass login = new LoginClass(driver);
             login.validLogin("will", "will");
@@ -321,51 +293,26 @@ namespace SuiteCRM.Tests
 
             //first name
 
-            action.MoveToElement(element1).SendKeys("John").Perform();
+            action.MoveToElement(element1).SendKeys(a).Perform();
 
             //Last name
-            driver.FindElement(By.XPath("(//input)[4]")).SendKeys("Doe");
+            contacts.lastname.SendKeys(b);
 
             contacts.save.Click();
 
             Thread.Sleep(5000);
 
-            IWebElement element2 = driver.FindElement(By.XPath("//scrm-dropdown-button[@class=\"ng-star-inserted\"]"));
-            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//scrm-dropdown-button[@class=\"ng-star-inserted\"]")));
-            action.MoveToElement(element2).Click().Perform();
-
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display1 = contacts.delete.Displayed;
-
-            Assert.AreEqual(display1, true);
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display2 = contacts.duplicate.Displayed;
-
-            Assert.AreEqual(display2, true);
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display3 = contacts.viewchangelog.Displayed;
-
-            Assert.AreEqual(display3, true);
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display4 = contacts.findDuplicates.Displayed;
-
-            Assert.AreEqual(display4, true);
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            Boolean display5 = contacts.printasPDF.Displayed;
-
-            Assert.AreEqual(display5, true);
+            contacts.action.Click();
 
             
+            IList<IWebElement> Dropdown = driver.FindElements(By.XPath("//div[@class=\"dropdown-menu show\"]/a"));
+            string[] elements = { "Delete", "Duplicate", "View Change Log", "Find Duplicates", "Print as PDF" };
+
+            for (int i = 0; i < elements.Length; i++)
+            {
+                Assert.AreEqual(elements[i], Dropdown[i].Text);
+            }
+
         }
 
         [Test]

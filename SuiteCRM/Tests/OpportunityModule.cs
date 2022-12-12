@@ -189,11 +189,11 @@ namespace SuiteCRM.Tests
             dashboardPage1.searchButtonToFilterOpportunties.Click();
             dashboardPage1.searchButtonToFilterOpportunties.Click();
             Thread.Sleep(TimeSpan.FromSeconds(5));
-            IList<IWebElement> filteredRecords = driver.FindElements(By.XPath("//a[starts-with(@href, \"#/opportunities/record\")]"));
+            IList<IWebElement> filteredRecords = driver.FindElements(By.XPath("//table[@aria-describedby=\"table-body\"]//tr[1]/td[3]/scrm-field/scrm-dynamic-field/a/scrm-varchar-detail"));
             for (int i = 0; i < filteredRecords.Count; i++)
             {
-                string[] filterRecord = filteredRecords[i].Text.Split("-");                
-                Assert.AreEqual(filterRecord[0].Trim(), data);
+                Assert.AreEqual(filteredRecords[i].Text.Trim(), data);
+                
             }           
         }
 

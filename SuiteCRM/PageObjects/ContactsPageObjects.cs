@@ -117,6 +117,12 @@ namespace SuiteCRM.PageObjects
 
         [FindsBy(How = How.XPath, Using = "//div[@role='alert']")]
         public IWebElement DeletingAlert;
+        
+        [FindsBy(How = How.XPath, Using = "//scrm-dropdown-button[@class=\"ng-star-inserted\"]")]
+        public IWebElement action;
+
+        [FindsBy(How = How.XPath, Using = "//div[@class=\"dropdown-menu show\"]/a")]
+        public IWebElement actionDropdown;
 
 
     }

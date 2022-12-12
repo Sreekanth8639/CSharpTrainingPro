@@ -16,22 +16,28 @@ using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports;
 using ICSharpCode.SharpZipLib.Zip;
 using NUnit.Framework.Interfaces;
+using TestStatus = NUnit.Framework.Interfaces.TestStatus;
 
 namespace SuiteCRM.Utilities
 {
     public class BaseClass
     {
-        //  ExtentReports extent;
-        //[OneTimeSetUp]
-        /* public void SetupReport() {
+        public ExtentReports extent;
+        public ExtentTest test;
+       
+        [OneTimeSetUp]
+        public void Setup()
 
-             String workingDirectory = Environment.CurrentDirectory;
-             String projectDirectory = Directory.GetParent(workingDirectory).FullName;
-             String reportPath = projectDirectory + "index.html";
-             var htmlReporter = new ExtentHtmlReporter(reportPath);
-             extent.AttachReporter(htmlReporter);
+        {
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            String reportPath = projectDirectory + "//index.html";
+            var htmlReporter = new ExtentHtmlReporter(reportPath);
+            extent = new ExtentReports();
+            extent.AttachReporter(htmlReporter);
+           
 
-         }*/
+        }
 
 
         public IWebDriver driver;
@@ -39,9 +45,7 @@ namespace SuiteCRM.Utilities
 
         public void startBrowser()
         {
-            //extent.CreateTest(TestContext.CurrentContext.Test.Name);
-
-            //String browserName = ConfigurationManager.AppSettings["browser"];
+            test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
             InitBrowser("Chrome");
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Manage().Window.Maximize();
@@ -74,11 +78,35 @@ namespace SuiteCRM.Utilities
         public void exitApplication()
         {
             var status = TestContext.CurrentContext.Result.Outcome.Status;
-            //if (status == TestStatus.Passed) { 
-            //}
-            //else (status == fa) { 
-            //}
+            var stackTrace = TestContext.CurrentContext.Result.StackTrace;
+
+
+            DateTime time = DateTime.Now;
+            String fileName = "Screenshot_" + time.ToString("h_mm_ss") + ".png";
+
+            if (status == TestStatus.Failed)
+            {
+                test.Fail("test failed", captureScreenShot(driver, fileName));
+                test.Log(Status.Fail, "test fail with logTrace" + stackTrace);
+            }
+            else if (status == TestStatus.Passed)
+            {
+            }
+            extent.Flush();
             driver.Quit();
+        }
+
+        public MediaEntityModelProvider captureScreenShot(IWebDriver driver, String screenShotName)
+
+        {
+            ITakesScreenshot ts = (ITakesScreenshot)driver;
+            var screenshot = ts.GetScreenshot().AsBase64EncodedString;
+
+            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, screenShotName).Build();
+
+
+
+
         }
 
     }
